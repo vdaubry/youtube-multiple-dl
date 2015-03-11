@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+$:.unshift File.expand_path("../../", __FILE__)
+require 'lib/youtube_multiple_dl'
+
+YoutubeMultipleDL::CLI.instance.run(ARGV)
