@@ -1,14 +1,6 @@
+$:.unshift File.dirname(__FILE__)
 require 'irb'
-require 'delayed_job_active_record'
-require_relative 'db/database'
-path = File.expand_path('models', File.dirname(__FILE__))
-Dir[path+"/**/*.rb"].each {|file| require file}
-
-path = File.expand_path('initializers', File.dirname(__FILE__))
-Dir[path+"/**/*.rb"].each {|file| require file}
-
-path = File.expand_path('extensions', File.dirname(__FILE__))
-Dir[path+"/**/*.rb"].each {|file| require file}
+require 'lib/youtube_multiple_dl'
 
 Database.connect
 

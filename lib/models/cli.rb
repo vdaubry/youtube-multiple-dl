@@ -1,19 +1,18 @@
 require 'optparse'
 require 'singleton'
+require 'byebug'
 
 module YoutubeMultipleDL
   class CLI
     include Singleton
     
     def run(args)
-      Database.connect
-      
       params, url_param = parse_cli_args(args)
       
       if params.has_key?(:start)
         YoutubeMultipleDL::Queue.process(num_workers: params[:workers].to_i)
       elsif params.has_key?(:add)
-        YoutubeMultipleDL::Download.new(url: url_param.first, priority: params[:priority]).start
+        YoutubeMultipleDL::Download.new(url: url_param.first, priority: params[:priority], output: params[:output]).start
       elsif params.has_key?(:list)
         YoutubeMultipleDL::Queue.list
       elsif params.has_key?(:to_delete)
@@ -30,6 +29,7 @@ module YoutubeMultipleDL
       opt_parser.banner = "Usage: youtube-multiple-dl [options] [URL]"
       options[:workers]=1
       options[:priority]=20
+      options[:output]="~/Downloads/"
       
       opt_parser.on("-o", "--output OUTPUT", "Set output directory") do |o|
         options[:output] = o

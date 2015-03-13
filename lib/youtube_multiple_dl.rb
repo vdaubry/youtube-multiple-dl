@@ -1,6 +1,9 @@
 $:.unshift File.dirname(__FILE__)
 require 'delayed_job_active_record'
 require 'db/database'
-require 'models'
-require 'extensions'
-require 'initializers'
+require 'models/cli'
+require 'models/download'
+require 'models/queue'
+require 'models/url'
+require 'extensions/delayed_job'
+require 'initializers/delayed_job'

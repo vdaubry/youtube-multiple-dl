@@ -2,4 +2,5 @@
 $:.unshift File.expand_path("../../", __FILE__)
 require 'lib/youtube_multiple_dl'
 
+Database.connect
 YoutubeMultipleDL::CLI.instance.run(ARGV)
