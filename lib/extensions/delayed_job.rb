@@ -5,15 +5,19 @@ module YoutubeMultipleDL
     end
     
     def self.current
-      where("locked_at IS NOT NULL AND failed_at IS NULL")
+      where("locked_at IS NOT NULL")
     end
     
     def self.failed
-      where("failed_at IS NOT NULL")
+      where("locked_at IS NULL AND last_error IS NOT NULL")
     end
     
     def self.queued
-      where("locked_at IS NULL AND failed_at IS NULL")
+      where("locked_at IS NULL")
+    end
+    
+    def self.with_url(url)
+      where("handler like '%#{url}%'")
     end
     
     def object

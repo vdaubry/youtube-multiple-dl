@@ -10,6 +10,7 @@
 /tmp/
 .env
 .DS_Store
+log/*.log
 
 
 ## Specific to RubyMotion:

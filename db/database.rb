@@ -29,6 +29,6 @@ class Database
   private
   
   def self.config
-    YAML::load(File.open('config/database.yml'))
+    YAML::load(File.open('config/database.yml'))[ENV["environment"]]
   end
 end

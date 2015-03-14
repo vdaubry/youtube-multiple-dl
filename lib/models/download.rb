@@ -1,3 +1,5 @@
+require 'open3'
+
 module YoutubeMultipleDL
   class Download
     attr_reader :priority, :url
@@ -20,9 +22,23 @@ module YoutubeMultipleDL
     end
     
     def call_downloader
-      system("youtube-dl --ignore-config -o #{@output}'%(title)s.%(ext)s' #{@url}")
+      log_file = "log/log-#{Process.pid}.log"
+      log = YoutubeMultipleDL::YoutubeDLLog.new(log_file: log_file)
+      
+      log.read do |progress|
+        puts progress
+        j = Delayed::Job
+          .current
+          .with_url(@url)
+          .first
+        j.update_attributes(:progress_info => progress)
+      end
+      
+      cmd = "youtube-dl --ignore-config -o #{@output}'%(title)s.%(ext)s' #{@url}"
+      success = system("#{cmd} > #{log_file}")
+      log.stop
+      raise "download failed" unless success
     end
     handle_asynchronously :call_downloader, :priority => Proc.new {|s| s.priority }
-    
   end
 end
