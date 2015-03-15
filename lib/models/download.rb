@@ -24,18 +24,24 @@ module YoutubeMultipleDL
     def call_downloader
       log_file = "log/log-#{Process.pid}.log"
       log = YoutubeMultipleDL::YoutubeDLLog.new(log_file: log_file)
-      
-      log.read do |progress|
-        puts progress
-        j = Delayed::Job
+      j = Delayed::Job
           .current
           .with_url(@url)
           .first
-        j.update_attributes(:progress_info => progress)
+      
+      log.read do |progress|
+        puts progress
+        begin
+          puts "Updating job id #{j.id}"
+          j.update_attributes(:progress_info => progress)
+        rescue StandardError => e
+          puts "SQLite table is locked, will try to update progress next cycle"
+          sleep rand(4)+1 #sleep random value so that process do not retry all at the same time
+        end
       end
       
       cmd = "youtube-dl --ignore-config -o #{@output}'%(title)s.%(ext)s' #{@url}"
-      success = system("#{cmd} > #{log_file}")
+      success = system("#{cmd.gsub("\n",' ')} >> #{log_file} 2>&1")
       log.stop
       raise "download failed" unless success
     end

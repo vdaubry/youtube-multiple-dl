@@ -14,17 +14,16 @@ module YoutubeMultipleDL
   
   
   class TableOutput::Column
-    def initialize(text:, size:)
+    def initialize(text:)
       @text = text ||= ""
-      @size = size
     end
     
-    def content
-      text = if @text.length < @size
-        number_of_spaces = @size-@text.length
+    def content(size:)
+      text = if @text.length < size
+        number_of_spaces = size-@text.length
         @text+" "*number_of_spaces
       else
-        @text[0..@size-4]+"..."
+        @text[0..size-4]+"..."
       end
       text.gsub("\n",' ')
     end
@@ -33,16 +32,22 @@ module YoutubeMultipleDL
   
   class TableOutput::Row
     def column_sizes
-      [45, 20, 50]
+      [5, 45, 20, 50]
+    end
+    
+    def content(columns:)
+      columns.each_with_index.map {|column, index| column.content(size: column_sizes[index])}.join(" | ")+" | "
     end
   end
   
   class TableOutput::HeaderRow < TableOutput::Row
     def content
-      column1 = TableOutput::Column.new(text: "URL", size: column_sizes[0])
-      column2 = TableOutput::Column.new(text: "STATUS", size: column_sizes[1])
-      column3 = TableOutput::Column.new(text: "INFOS", size: column_sizes[2])
-      column1.content+" | "+column2.content+" | "+column3.content+" | "
+      columns = []
+      columns << TableOutput::Column.new(text: "ID")
+      columns << TableOutput::Column.new(text: "URL")
+      columns << TableOutput::Column.new(text: "STATUS")
+      columns << TableOutput::Column.new(text: "INFOS")
+      super(columns: columns)
     end
   end
   
@@ -53,10 +58,12 @@ module YoutubeMultipleDL
     end
     
     def content
-      column1 = TableOutput::Column.new(text: @job.object.url, size: column_sizes[0])
-      column2 = TableOutput::Column.new(text: status, size: column_sizes[1])
-      column3 = TableOutput::Column.new(text: info, size: column_sizes[2])
-      column1.content+" | "+column2.content+" | "+column3.content+" | "
+      columns = []
+      columns << TableOutput::Column.new(text: @job.id.to_s)
+      columns << TableOutput::Column.new(text: @job.object.url)
+      columns << TableOutput::Column.new(text: status)
+      columns << TableOutput::Column.new(text: info)
+      super(columns: columns)
     end
   end
   

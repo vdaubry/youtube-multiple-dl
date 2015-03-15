@@ -20,6 +20,10 @@ module YoutubeMultipleDL
       Delayed::Job.with_url(url).destroy_all
     end
     
+    def self.delete_all
+      Delayed::Job.destroy_all
+    end
+    
     def self.import(file)
       File.open(file, "r").each_line do |url|
         YoutubeMultipleDL::Download.new(url: url, priority: 20).start

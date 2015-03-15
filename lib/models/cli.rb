@@ -19,6 +19,8 @@ module YoutubeMultipleDL
         YoutubeMultipleDL::Queue.delete(params[:to_delete])
       elsif params.has_key?(:file)
         YoutubeMultipleDL::Queue.import(params[:file])
+      elsif params.has_key?(:clear)
+        YoutubeMultipleDL::Queue.delete_all
       end
     end
     
@@ -53,6 +55,10 @@ module YoutubeMultipleDL
       
       opt_parser.on("-d", "--delete URL", "Delete url from queue") do |url|
         options[:to_delete] = url
+      end
+      
+      opt_parser.on("-c", "--clear", "delete all urls") do |file|
+        options[:clear] = true
       end
       
       opt_parser.on("-l", "--list", "List urls in queue") do

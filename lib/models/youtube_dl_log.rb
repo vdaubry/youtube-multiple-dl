@@ -5,15 +5,19 @@ module YoutubeMultipleDL
     end
     
     def progress
-      line = File.open(@log_file).to_a.last.split("[download]").last
-      progress = line.match(/(\d+|\d+[.]\d+)%.*/)
-      progress[0] if progress
+      begin
+        line = File.open(@log_file).to_a.last.split("[download]").last
+        progress = line.match(/(\d+|\d+[.]\d+)%.*/)
+        progress[0] if progress
+      rescue Errno::ENOENT => e
+        puts "process did not started logging, try again at next cycle"
+      end
     end
     
     def read
       @pid = fork do
         loop do
-          sleep 1
+          sleep rand(4)+1
           current_progress = progress()
           if current_progress
             yield(current_progress) 

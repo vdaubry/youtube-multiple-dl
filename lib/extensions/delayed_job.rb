@@ -13,7 +13,7 @@ module YoutubeMultipleDL
     end
     
     def self.queued
-      where("locked_at IS NULL")
+      where("locked_at IS NULL AND last_error IS NULL")
     end
     
     def self.with_url(url)
