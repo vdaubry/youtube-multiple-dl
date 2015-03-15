@@ -10,7 +10,7 @@ module YoutubeMultipleDL
         progress = line.match(/(\d+|\d+[.]\d+)%.*/)
         progress[0] if progress
       rescue Errno::ENOENT => e
-        puts "process did not started logging, try again at next cycle"
+        puts "process did not start logging, try again at next cycle"
       end
     end
     
