@@ -6,9 +6,12 @@ module YoutubeMultipleDL
     
     def progress
       begin
-        line = File.open(@log_file).to_a.last.split("[download]").last
-        progress = line.match(/(\d+|\d+[.]\d+)%.*/)
-        progress[0] if progress
+        lines = File.open(@log_file).to_a.last
+        if lines
+          line = lines.split("[download]").last 
+          progress = line.match(/(\d+|\d+[.]\d+)%.*/)
+          progress[0] if progress
+        end
       rescue Errno::ENOENT => e
         puts "process did not start logging, try again at next cycle"
       end
