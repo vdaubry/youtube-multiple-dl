@@ -7,7 +7,7 @@ module YoutubeMultipleDL
     def initialize(url:, priority:nil, output:nil)
       @url = url
       @priority = priority || 20
-      @output = output || "~/Downloads/"
+      @output = output || "/media/HDD/ftp/vids/new/download"
     end
     
     def start
@@ -32,7 +32,6 @@ module YoutubeMultipleDL
       log.read do |progress|
         puts progress
         begin
-          puts "Updating job id #{j.id}"
           j.update_attributes(:progress_info => progress)
         rescue StandardError => e
           puts "SQLite table is locked, will try to update progress next cycle"
