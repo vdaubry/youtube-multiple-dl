@@ -6,8 +6,8 @@ module YoutubeMultipleDL
     
     def initialize(url:, priority:nil, output:nil)
       @url = url
-      @priority = priority || 20
-      @output = output || "/media/HDD/ftp/vids/new/download"
+      @priority = priority
+      @output = output
     end
     
     def start

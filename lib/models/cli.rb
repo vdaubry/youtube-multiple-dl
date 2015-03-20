@@ -31,7 +31,7 @@ module YoutubeMultipleDL
       opt_parser.banner = "Usage: youtube-multiple-dl [options] [URL]"
       options[:workers]=1
       options[:priority]=20
-      options[:output]="~/Downloads/"
+      options[:output]="/media/HDD/ftp/vids/new/download"
       
       opt_parser.on("-o", "--output OUTPUT", "Set output directory") do |o|
         options[:output] = o
