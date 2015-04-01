@@ -11,7 +11,7 @@
 .env
 .DS_Store
 log/*.log
-db/database.sqlite3
+*.sqlite3
 
 ## Specific to RubyMotion:
 .dat*

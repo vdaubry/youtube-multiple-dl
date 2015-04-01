@@ -32,7 +32,7 @@ module YoutubeMultipleDL
   
   class TableOutput::Row
     def column_sizes
-      [5, 45, 20, 50]
+      [4, 85, 12, 44]
     end
     
     def content(columns:)

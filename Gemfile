@@ -4,7 +4,6 @@ ruby '2.2.0'
 
 gem 'delayed_job_active_record'
 gem 'sqlite3'
-gem 'table_print'
 
 group :test do
   gem 'rspec'
