@@ -29,5 +29,11 @@ module YoutubeMultipleDL
         YoutubeMultipleDL::Download.new(url: url, priority: 20).start
       end
     end
+    
+    def self.list_failed
+      Delayed::Job.failed.find_each do |job|
+        puts job.object.url
+      end
+    end
   end
 end

@@ -21,6 +21,8 @@ module YoutubeMultipleDL
         YoutubeMultipleDL::Queue.import(params[:file])
       elsif params.has_key?(:clear)
         YoutubeMultipleDL::Queue.delete_all
+      elsif params.has_key?(:failed)
+        YoutubeMultipleDL::Queue.list_failed
       end
     end
     
@@ -67,6 +69,10 @@ module YoutubeMultipleDL
       
       opt_parser.on("-i", "--import FILE", "Import batch file of url to dowload") do |file|
         options[:file] = file
+      end
+      
+      opt_parser.on("-f", "--failed", "List failed urls") do |file|
+        options[:failed] = true
       end
         
       opt_parser.on("-h", "--help", "Prints this help") do
