@@ -2,7 +2,7 @@ youtube-multiple-dl
 ===================
 
 This project adds support for multiple files downloading with youtube-dl.
-[youtube-dl](https://github.com/rg3/youtube-dl) is a command line utility to download files from major streaming website (youtube, etc). At the moment you can only download files one at a time. 
+[youtube-dl](https://github.com/rg3/youtube-dl) is a command line utility to download files from major streaming website (youtube, etc). At the moment you can only download files one at a time with youtube-dl. 
 
 youtube-multiple-dl is a lightweight job queue around youtube-dl for parallel downloads, it provides a command line interface to : 
 
