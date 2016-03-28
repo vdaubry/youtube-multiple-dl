@@ -37,6 +37,7 @@ If youtube-dl is not installed, check the [youtube-dl install instructions](http
 
 - Clone this repository
 - Bundle install
+- rake db:migrate
 
 
 ## Usage :
